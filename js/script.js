@@ -1,4 +1,5 @@
-// script.js
+/* ChatGPT Acknowledgement:
+    This is to acknowledge that I have used the assistance of ChatGPT for various explainations and code generation whenever I found myself stuck and in need of help. */
 
 class NoteApp {
     constructor() {
@@ -16,6 +17,7 @@ class NoteApp {
             this.loadNotesForWriter();
             const addNoteButton = document.getElementById('add-note');
             if (addNoteButton) {
+                addNoteButton.innerText = messages.addNote; // Using the message from user.js
                 addNoteButton.onclick = () => this.addNote();
             }
             setInterval(() => this.saveNotes(), 2000);
@@ -49,7 +51,7 @@ class NoteApp {
             this.notes[index] = textarea.value;
         };
         const removeButton = document.createElement('button');
-        removeButton.innerText = 'Remove';
+        removeButton.innerText = messages.removeNote; // Using the message from user.js
         removeButton.onclick = () => this.removeNote(index);
         noteDiv.appendChild(textarea);
         noteDiv.appendChild(removeButton);
@@ -77,7 +79,7 @@ class NoteApp {
     updateSaveTime() {
         const saveTimeElement = document.getElementById('save-time');
         if (saveTimeElement) {
-            saveTimeElement.innerText = new Date().toLocaleTimeString();
+            saveTimeElement.innerText = `${messages.storedAt} ${new Date().toLocaleTimeString()}`;
         }
     }
 
@@ -85,23 +87,28 @@ class NoteApp {
     loadNotesForReader() {
         this.loadStoredNotes();
         this.readerPage.innerHTML = ''; // Clear previous notes
-        this.notes.forEach(note => {
-            const noteDiv = document.createElement('div');
-            noteDiv.innerText = note;
-            this.readerPage.appendChild(noteDiv);
-        });
+        if (this.notes.length === 0) {
+            const noNotesMessage = document.createElement('div');
+            noNotesMessage.innerText = messages.noNotes;
+            this.readerPage.appendChild(noNotesMessage);
+        } else {
+            this.notes.forEach(note => {
+                const noteDiv = document.createElement('div');
+                noteDiv.innerText = note;
+                this.readerPage.appendChild(noteDiv);
+            });
+        }
         this.updateUpdateTime();
     }
 
     updateUpdateTime() {
         const updateTimeElement = document.getElementById('update-time');
         if (updateTimeElement) {
-            updateTimeElement.innerText = new Date().toLocaleTimeString();
+            updateTimeElement.innerText = `${messages.updatedAt} ${new Date().toLocaleTimeString()}`;
         }
     }
 }
 
-// Instantiate the NoteApp class when the window loads
 window.onload = function() {
     new NoteApp();
 };
