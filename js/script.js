@@ -7,7 +7,6 @@ class NoteApp {
         this.init();
     }
 
-    // Initialize the app
     init() {
         // Check if we're on writer.html or reader.html
         this.writerPage = document.getElementById('notes-container');
@@ -17,7 +16,7 @@ class NoteApp {
             this.loadNotesForWriter();
             const addNoteButton = document.getElementById('add-note');
             if (addNoteButton) {
-                addNoteButton.innerText = messages.addNote; // Using the message from user.js
+                addNoteButton.innerText = messages.addNote;
                 addNoteButton.onclick = () => this.addNote();
             }
             setInterval(() => this.saveNotes(), 2000);
@@ -51,7 +50,7 @@ class NoteApp {
             this.notes[index] = textarea.value;
         };
         const removeButton = document.createElement('button');
-        removeButton.innerText = messages.removeNote; // Using the message from user.js
+        removeButton.innerText = messages.removeNote;
         removeButton.onclick = () => this.removeNote(index);
         noteDiv.appendChild(textarea);
         noteDiv.appendChild(removeButton);
@@ -67,7 +66,7 @@ class NoteApp {
     removeNote(index) {
         this.notes.splice(index, 1);
         this.saveNotes();
-        this.writerPage.innerHTML = ''; // Clear the container
+        this.writerPage.innerHTML = '';
         this.notes.forEach((note, idx) => this.createNoteElement(note, idx)); // Re-create the notes
     }
 
@@ -86,7 +85,7 @@ class NoteApp {
     // Reader Functions
     loadNotesForReader() {
         this.loadStoredNotes();
-        this.readerPage.innerHTML = ''; // Clear previous notes
+        this.readerPage.innerHTML = '';
         if (this.notes.length === 0) {
             const noNotesMessage = document.createElement('div');
             noNotesMessage.innerText = messages.noNotes;
